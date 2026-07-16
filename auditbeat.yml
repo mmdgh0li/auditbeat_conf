@@ -10,6 +10,15 @@
 
 
 auditbeat.modules:
+- module: file_integrity
+  paths:
+  - /bin
+  - /usr/bin
+  - /sbin
+  - /usr/sbin
+  - /etc
+
+
 - module: auditd
   audit_rules: |
     -w /var/log/audit/ -p wra -k T1562_001_auditlog
@@ -219,11 +228,3 @@ auditbeat.modules:
     -a always,exit -F arch=b32 -S mkdir -S mkdirat -S creat -S link -S linkat -S symlink -S symlinkat -S mknod -S mknodat -F exit=-EACCES -k T1083_file_creation_failed
     -a always,exit -F arch=b32 -S mkdir -S mkdirat -S creat -S link -S linkat -S symlink -S symlinkat -S mknod -S mknodat -F exit=-EPERM -k T1083_file_creation_failed
 
-
-- module: file_integrity
-  paths:
-  - /bin
-  - /usr/bin
-  - /sbin
-  - /usr/sbin
-  - /etc
